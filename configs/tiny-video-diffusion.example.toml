@@ -1,0 +1,47 @@
+# Template only: it cannot train until a rights-approved, preprocessed dataset
+# and train/validation/test split manifest exist at the paths below.
+
+[experiment]
+name = "tiny-video-diffusion-feasibility"
+seed = 20261012
+output_dir = "../runs"
+
+[dataset]
+registry = "../data/registry/datasets.json"
+manifest = "../data/prepared/splits.jsonl"
+train_split = "train"
+validation_split = "validation"
+
+[model]
+# Deliberately tiny first experiment: 8 frames at 16x16 RGB, pixel-space DDPM.
+frames = 8
+width = 16
+height = 16
+channels = 3
+base_channels = 32
+condition_dim = 128
+timesteps = 100
+noise_schedule = "linear"
+beta_start = 0.0001
+beta_end = 0.02
+max_text_bytes = 96
+
+[training]
+max_steps = 1000
+batch_size = 1
+gradient_accumulation = 1
+objective = "epsilon_mse"
+optimizer = "AdamW"
+learning_rate = 0.0001
+learning_rate_schedule = "constant"
+weight_decay = 0.01
+beta1 = 0.9
+beta2 = 0.999
+adam_epsilon = 0.00000001
+max_grad_norm = 1.0
+precision = "fp32"
+checkpoint_every = 100
+validation_every = 100
+validation_batches = 4
+deterministic = true
+device = "auto"

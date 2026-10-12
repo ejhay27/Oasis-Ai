@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "oasis-video-research"
+version = "0.1.0"
+description = "Reproducible research infrastructure for the OASIS video-model program"
+readme = "README.md"
+requires-python = ">=3.11"
+authors = [{ name = "OASIS AI" }]
+dependencies = []
+
+[project.optional-dependencies]
+preprocess = ["Pillow>=10.0"]
+training = [
+  "numpy>=1.24",
+  "Pillow>=10.0",
+  "safetensors>=0.4.2",
+  "torch>=2.2",
+  "psutil>=5.9",
+]
+test = ["pytest>=8.0"]
+
+[project.scripts]
+oasis-research = "oasis_video.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
